@@ -1,0 +1,23 @@
+# Terraform state — never commit
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Variable files often carry secrets
+*.tfvars
+*.tfvars.json
+!example.tfvars
+
+# Provider plugins and modules
+.terraform/
+.terraform.lock.hcl
+
+# Plan output
+*.tfplan
+crash.log
+crash.*.log
+
+# Editor
+.DS_Store
+.idea/
+.vscode/
