@@ -9,46 +9,5 @@ permissions:
   contents: read
 
 jobs:
-  validate:
-    name: fmt, validate, lint, scan
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.9.8
-
-      - name: terraform fmt
-        run: terraform fmt -check -recursive
-
-      - name: terraform init
-        run: terraform init -backend=false
-
-      - name: terraform validate
-        run: terraform validate
-
-      - name: validate examples
-        run: |
-          for dir in examples/*/; do
-            echo "== $dir"
-            terraform -chdir="$dir" init -backend=false
-            terraform -chdir="$dir" validate
-          done
-
-      - uses: terraform-linters/setup-tflint@v4
-        with:
-          tflint_version: latest
-
-      - name: tflint
-        run: |
-          tflint --init
-          tflint --recursive
-
-      - name: checkov
-        uses: bridgecrewio/checkov-action@master
-        with:
-          directory: .
-          framework: terraform
-          soft_fail: true
+  ci:
+    uses: arunrajm91/terraform-ci/.github/workflows/ci.yml@v1
